@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, minimum-scale=1, maximum-scale=1">
+  <title>Balatro</title>
+
+  <!-- Load custom style sheet -->
+  <link rel="stylesheet" type="text/css" href="theme/love.css">
+  <link rel="icon" type="image/png" href="https://media.gq.com/photos/5fbd3397fff3e5e56de13fc1/16:9/w_2240,c_limit/Riz_Playlist.jpg">
+
+  <style>
+    body {
+      background-color: black;
+    }
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid purple;
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -60px;
+      margin-left: -60px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    #made-by-text {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-family: sans-serif;
+      animation: drop-and-settle 2s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    @keyframes drop-and-settle {
+      0% {
+        transform: translateY(-100vh) rotate(720deg);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <script src="consolewrapper.js"></script>
+  <script>
+    if (typeof console !== 'undefined' && typeof console.debug !== 'function') {
+      console.debug = console.log.bind(console);
+    }
+    var __logger = (typeof console !== 'undefined') ? console : null;
+    if (typeof window !== 'undefined') {
+      if (typeof window.__getWebDB !== 'function') {
+        window.__getWebDB = function(name) {
+          try {
+            return window.localStorage ? window.localStorage.getItem(name) : null;
+          } catch (err) {
+            if (__logger && __logger.warn) {
+              __logger.warn('Unable to access localStorage for __getWebDB:', err);
+            }
+            return null;
+          }
+        };
+      }
+      if (typeof window.__setWebDB !== 'function') {
+        window.__setWebDB = function(name, value) {
+          try {
+            if (window.localStorage) {
+              window.localStorage.setItem(name, value);
+              return true;
+            }
+          } catch (err) {
+            if (__logger && __logger.warn) {
+              __logger.warn('Unable to access localStorage for __setWebDB:', err);
+            }
+          }
+          return false;
+        };
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <center>
+    <div id="spinner" class="spinner"></div>
+    <div>
+      <canvas id="loadingCanvas" oncontextmenu="event.preventDefault()" width="800" height="600"></canvas>
+      <canvas id="canvas" oncontextmenu="event.preventDefault()" width="100%" height="100%" style="visibility: hidden;"></canvas>
+    </div>
+  </center>
+  <p id="made-by-text">made by Colt 45's Studios™</p>
+
+  <script type='text/javascript'>
+    window.callad = () => {
+      window.parent.postMessage({
+        type: 'adcall'
+      }, '*');
+    }
+    var canvas = document.getElementById("loadingCanvas");
+    canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+
+    function goFullScreen() {
+      var canvas = document.getElementById("canvas");
+      if (canvas.requestFullScreen)
+        canvas.requestFullScreen();
+      else if (canvas.webkitRequestFullScreen)
+        canvas.webkitRequestFullScreen();
+      else if (canvas.mozRequestFullScreen)
+        canvas.mozRequestFullScreen();
+    }
+
+    function FullScreenHook() {
+      var canvas = document.getElementById("canvas");
+      canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+      canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    }
+    var loadingContext = document.getElementById('loadingCanvas').getContext('2d');
+
+    function drawLoadingText(text) {
+      var canvas = loadingContext.canvas;
+
+      loadingContext.fillStyle = "black";
+      loadingContext.fillRect(0, 0, canvas.scrollWidth, canvas.scrollHeight);
+
+      // No longer drawing loading text to hide numbers
+    }
+
+    window.onload = function() {
+      window.focus();
+    };
+    window.onclick = function() {
+      window.focus();
+    };
+
+    window.addEventListener("keydown", function(e) {
+      // space and arrow keys
+      if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+        e.preventDefault();
+      }
+    }, false);
+
+    var Module = {
+      arguments: ["./data"],
+      INITIAL_MEMORY: 256000000,
+      printErr: console.error.bind(console),
+      canvas: (function() {
+        var canvas = document.getElementById('canvas');
+
+        // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+        // application robust, you may want to override this behavior before shipping!
+        // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+        canvas.addEventListener("webglcontextlost", function(e) {
+          alert('WebGL context lost. You will need to reload the page.');
+          e.preventDefault();
+        }, false);
+
+        return canvas;
+      })(),
+      setStatus: function(text) {
+        if (text) {
+          drawLoadingText(text);
+        } else if (Module.remainingDependencies === 0) {
+          document.getElementById('loadingCanvas').style.display = 'none';
+          document.getElementById('spinner').style.display = 'none';
+          document.getElementById('canvas').style.visibility = 'visible';
+          document.getElementById('made-by-text').style.display = 'none';
+        }
+      },
+      totalDependencies: 0,
+      remainingDependencies: 0,
+      monitorRunDependencies: function(left) {
+        this.remainingDependencies = left;
+        this.totalDependencies = Math.max(this.totalDependencies, left);
+        Module.setStatus(left ? 'Preparing...' : 'All downloads complete.');
+      }
+    };
+    Module.setStatus('Downloading...');
+    window.onerror = function(event) {
+      // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
+      Module.setStatus('Exception thrown, see JavaScript console');
+      Module.setStatus = function(text) {
+        if (text) Module.printErr('[post-exception status] ' + text);
+      };
+    };
+
+    var applicationLoad = function(e) {
+      Love(Module);
+    }
+  </script>
+  <script type="text/javascript" src="game.js"></script>
+  <script async type="text/javascript" src="love.js" onload="applicationLoad(this)"></script>
+</body>
+</html>

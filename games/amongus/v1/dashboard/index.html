@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Among Nobody – Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  :root {
+    /* ── color tokens ── */
+    --bg:        #101216;
+    --panel:     #171a20;
+    --panel-alt: #1e222a;
+    --panel-hi:  #262b35;
+    --border:    rgba(255,255,255,.08);
+    --border-hi: rgba(255,255,255,.14);
+
+    --text:      #eef0f4;
+    --text-dim:  #8d93a1;
+    --text-faint:#5c6170;
+
+    --accent:      #4f7fff;
+    --accent-soft: rgba(79,127,255,.14);
+    --green:       #2fbf71;
+    --green-soft:  rgba(47,191,113,.14);
+    --red:         #ef5350;
+    --red-soft:    rgba(239,83,80,.14);
+    --gold:        #e0a940;
+    --gold-soft:   rgba(224,169,64,.14);
+
+    /* ── scale ── */
+    --r-sm: 8px;
+    --r-md: 12px;
+    --r-lg: 16px;
+    --shadow: 0 1px 2px rgba(0,0,0,.24), 0 8px 24px rgba(0,0,0,.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .screen { display: none; }
+  .screen.active { display: flex; }
+
+  /* ══════════════════════════════════════════════
+     LANDING
+  ══════════════════════════════════════════════ */
+  #landing {
+    min-height: 100vh; flex-direction: column;
+    align-items: center;
+    gap: 40px; padding: 72px 20px 56px;
+  }
+
+  .logo-wrap { text-align: center; }
+  .logo-wrap img {
+    max-width: 220px; width: 60vw;
+    image-rendering: pixelated;
+  }
+  #text-logo {
+    display: none; font-size: 2rem; font-weight: 800; letter-spacing: -.5px;
+    color: var(--text);
+  }
+
+  .landing-eyebrow {
+    font-size: .8rem; font-weight: 600; color: var(--text-dim);
+    text-align: center; margin-top: -12px;
+  }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 28px;
+    width: 100%; max-width: 420px; box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;
+  }
+  .card-sub { color: var(--text-dim); font-size: .88rem; margin-bottom: 20px; line-height: 1.5; }
+
+  .input-row { display: flex; gap: 10px; }
+  input[type=text] {
+    flex: 1; background: var(--panel-alt); border: 1.5px solid var(--border);
+    border-radius: var(--r-md); color: var(--text);
+    font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
+    padding: 12px 16px; outline: none;
+    transition: border-color .15s;
+  }
+  input[type=text]::placeholder { color: var(--text-faint); font-weight: 400; }
+  input[type=text]:focus { border-color: var(--accent); }
+  #code-input {
+    text-transform: uppercase; letter-spacing: 6px;
+    text-align: center; font-size: 1.1rem;
+  }
+  #code-error {
+    color: var(--red); font-size: .82rem; margin-top: 10px; display: none;
+  }
+
+  button {
+    background: var(--accent); border: none; border-radius: var(--r-md);
+    color: #fff; cursor: pointer; font-family: 'Inter', sans-serif;
+    font-size: .9rem; font-weight: 700; padding: 12px 22px;
+    transition: background .15s, transform .1s;
+    white-space: nowrap;
+  }
+  button:hover { background: #6a94ff; }
+  button:active { transform: scale(.98); }
+  button.ghost {
+    background: transparent; border: 1.5px solid var(--border); color: var(--text-dim);
+  }
+  button.ghost:hover { border-color: var(--border-hi); color: var(--text); background: var(--panel-alt); }
+
+  /* how-to steps */
+  .howto {
+    width: 100%; max-width: 420px;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .howto-title {
+    font-size: .75rem; font-weight: 700; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: .5px;
+    margin: 4px 2px 4px;
+  }
+  .howto-step {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .howto-num {
+    background: var(--panel-hi); color: var(--text);
+    border-radius: 50%; width: 24px; height: 24px;
+    font-size: .78rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .howto-text { font-size: .87rem; line-height: 1.55; color: var(--text-dim); }
+  .howto-text strong { color: var(--text); font-weight: 600; }
+  .howto-text em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+  /* ══════════════════════════════════════════════
+     HOSTING SCREEN
+  ══════════════════════════════════════════════ */
+  #hosting { min-height: 100vh; flex-direction: column; }
+
+  .host-header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    flex-shrink: 0;
+  }
+  .host-header-logo {
+    font-size: .95rem; font-weight: 800;
+  }
+  .host-header-title { flex: 1; font-size: .85rem; color: var(--text-dim); }
+
+  .phase-badge {
+    border-radius: 999px; padding: 6px 14px;
+    font-size: .75rem; font-weight: 700;
+    border: 1px solid var(--border); color: var(--text-dim);
+    background: var(--panel-alt); transition: all .3s;
+  }
+  .phase-badge.playing    { background: var(--green-soft); color: var(--green); border-color: rgba(47,191,113,.3); }
+  .phase-badge.discussion { background: var(--red-soft);   color: var(--red);   border-color: rgba(239,83,80,.3); }
+  .phase-badge.voting     { background: var(--gold-soft);  color: var(--gold);  border-color: rgba(224,169,64,.3); }
+  .phase-badge.results    { background: var(--accent-soft);color: var(--accent);border-color: rgba(79,127,255,.3); }
+  .phase-badge.ended      { background: var(--red-soft);   color: var(--red);   border-color: rgba(239,83,80,.2); }
+
+  /* 3-col layout */
+  .host-body {
+    flex: 1; display: grid; position: relative;
+    grid-template-columns: 260px 1fr 320px;
+    min-height: 0;
+  }
+
+  /* waiting overlay */
+  #dashboard-not-found {
+    position: absolute; inset: 0; z-index: 20;
+    background: rgba(16,18,22,.97);
+    display: none; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px; padding: 40px; text-align: center;
+  }
+  #dashboard-not-found.show { display: flex; }
+  .waiting-title { font-size: 1.3rem; font-weight: 700; }
+  .waiting-sub { color: var(--text-dim); font-size: .88rem; line-height: 1.6; }
+  .dots::after { content:''; animation: dots 1.5s infinite steps(4, end); }
+  @keyframes dots { 0%{content:''} 25%{content:'.'} 50%{content:'..'} 75%{content:'...'} }
+
+  /* ── LEFT col ── */
+  .host-left {
+    background: var(--panel); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    padding: 20px; gap: 16px; overflow-y: auto;
+  }
+
+  .code-block {
+    background: var(--panel-alt); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 20px; text-align: center;
+  }
+  .code-label {
+    font-size: .72rem; color: var(--text-dim); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;
+  }
+  .game-code {
+    font-size: 2.6rem; font-weight: 800; letter-spacing: 6px;
+    color: var(--text); line-height: 1;
+  }
+
+  /* how-to inside left col */
+  .join-steps {
+    background: var(--panel-alt); border: 1px solid var(--border);
+    border-radius: var(--r-lg); padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .join-steps-title {
+    font-size: .72rem; color: var(--text-dim); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .join-step { display: flex; align-items: flex-start; gap: 10px; }
+  .join-step-num {
+    background: var(--panel-hi); color: var(--text);
+    border-radius: 50%; width: 20px; height: 20px; flex-shrink: 0;
+    font-size: .7rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .join-step-text { font-size: .82rem; line-height: 1.5; color: var(--text-dim); }
+  .join-step-text strong { color: var(--text); font-weight: 600; }
+  .join-step-text .url { color: var(--accent); font-weight: 700; }
+
+  .left-stats { display: flex; flex-direction: column; gap: 8px; }
+  .left-stat {
+    background: var(--panel-alt); border: 1px solid var(--border);
+    border-radius: var(--r-md); padding: 12px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .left-stat-label { font-size: .72rem; color: var(--text-dim); font-weight: 600; }
+  .left-stat-value { font-weight: 700; font-size: .9rem; text-align: right; }
+
+  /* ── CENTRE col ── */
+  .host-centre {
+    background: var(--bg); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .section-header {
+    padding: 16px 20px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .section-header h3 { font-size: .85rem; font-weight: 700; flex: 1; }
+  .count-badge {
+    background: var(--panel-hi); color: var(--text-dim);
+    border-radius: 999px; font-size: .74rem; font-weight: 700; padding: 3px 10px;
+  }
+
+  #players-grid {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; align-content: start;
+  }
+
+  .player-card {
+    background: var(--panel); border-radius: var(--r-md);
+    padding: 12px 14px; display: flex; align-items: center; gap: 12px;
+    border: 1px solid var(--border);
+  }
+  .player-card.is-dead { opacity: .45; }
+  .player-card.is-dead .player-name-text { text-decoration: line-through; }
+  .player-card.is-host { border-color: rgba(224,169,64,.35); }
+
+  .player-sprite-wrap {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 50%; overflow: hidden;
+    background: var(--panel-alt);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .player-sprite { width: 38px; height: 38px; image-rendering: pixelated; }
+
+  .player-info { flex: 1; min-width: 0; }
+  .player-name-text {
+    font-weight: 600; font-size: .85rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player-tag-row { display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap; }
+  .ptag {
+    font-size: .62rem; font-weight: 700; border-radius: 5px;
+    padding: 2px 6px; line-height: 1.4;
+  }
+  .ptag-host { background: var(--gold-soft); color: var(--gold); border: 1px solid rgba(224,169,64,.3); }
+  .ptag-dead { background: var(--panel-hi); color: var(--text-dim); border: 1px solid var(--border); }
+
+  /* ── RIGHT col: chat ── */
+  .host-right { background: var(--panel); display: flex; flex-direction: column; overflow: hidden; }
+
+  #chat-log {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 14px;
+    scroll-behavior: smooth;
+  }
+  #chat-log::-webkit-scrollbar { width: 4px; }
+  #chat-log::-webkit-scrollbar-track { background: transparent; }
+  #chat-log::-webkit-scrollbar-thumb { background: var(--panel-hi); border-radius: 4px; }
+
+  .chat-msg { display: flex; flex-direction: column; gap: 5px; }
+
+  .chat-bubble-header { display: flex; align-items: center; gap: 8px; }
+  .chat-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    image-rendering: pixelated; flex-shrink: 0;
+    background: var(--panel-alt);
+  }
+  .chat-name { font-weight: 700; font-size: .82rem; }
+  .chat-time { font-size: .7rem; color: var(--text-faint); margin-left: auto; }
+  .chat-bubble {
+    background: var(--panel-alt); border-radius: var(--r-md);
+    padding: 9px 12px; font-size: .84rem; line-height: 1.5;
+    color: var(--text); margin-left: 34px;
+    border: 1px solid var(--border); word-break: break-word;
+  }
+
+  .chat-system {
+    text-align: center; font-size: .74rem; color: var(--text-faint);
+    padding: 4px 0;
+  }
+
+  .chat-empty-state {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--text-faint); gap: 10px; padding: 24px; text-align: center;
+  }
+  .chat-empty-icon { font-size: 1.8rem; opacity: .4; }
+  .chat-empty-text { font-size: .84rem; color: var(--text-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .host-body { grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; }
+    .host-left {
+      grid-row: 1; grid-column: 1 / 3;
+      flex-direction: row; flex-wrap: wrap; align-items: flex-start;
+      border-right: none; border-bottom: 1px solid var(--border);
+      padding: 16px; gap: 14px;
+    }
+    .code-block { flex: 0 0 auto; }
+    .join-steps { flex: 1; min-width: 220px; }
+    .left-stats { flex: 1; min-width: 170px; }
+    .host-centre { grid-column: 1; }
+    .host-right  { grid-column: 2; }
+  }
+  @media (max-width: 600px) {
+    .host-body { grid-template-columns: 1fr; }
+    .host-left, .host-centre, .host-right { grid-column: 1; }
+    .host-right { min-height: 240px; }
+    #players-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════ LANDING ════════════ -->
+<section class="screen active" id="landing">
+  <div class="logo-wrap">
+    <img src="bannerLogo_AmongUs.png" alt="Among Nobody"
+         onerror="this.style.display='none';document.getElementById('text-logo').style.display='block'" />
+    <h1 id="text-logo">Among Nobody</h1>
+  </div>
+
+  <p class="landing-eyebrow">Host Dashboard</p>
+
+  <div class="card">
+    <div class="card-title">Watch a game</div>
+    <p class="card-sub">Enter the 4-letter room code shown in the game lobby to spectate.</p>
+    <div class="input-row">
+      <input type="text" id="code-input" placeholder="ABCD" maxlength="4" autocomplete="off" spellcheck="false" />
+      <button id="watch-btn">Watch</button>
+    </div>
+    <p id="code-error">Please enter a valid 4-letter code.</p>
+  </div>
+
+  <div class="howto">
+    <p class="howto-title">How to join a game</p>
+
+    <div class="howto-step">
+      <div class="howto-num">1</div>
+      <div class="howto-text">Open <strong>au.sillyprootsoda.com</strong> in your browser — that's the game client.</div>
+    </div>
+
+    <div class="howto-step">
+      <div class="howto-num">2</div>
+      <div class="howto-text">Type your <strong>name</strong> in the name box on the main menu, then press <em>Online</em>.</div>
+    </div>
+
+    <div class="howto-step">
+      <div class="howto-num">3</div>
+      <div class="howto-text">Type the <strong>4-letter room code</strong>, and hit join.</div>
+    </div>
+
+    <div class="howto-step">
+      <div class="howto-num">4</div>
+      <div class="howto-text">You're in! Wait in the lobby for the host to start the game.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ HOSTING ════════════ -->
+<section class="screen" id="hosting">
+  <header class="host-header">
+    <span class="host-header-logo">Among Nobody</span>
+    <span class="host-header-title">Dashboard</span>
+    <span class="phase-badge" id="phase-badge">Lobby</span>
+    <button class="ghost" id="header-back">← Back</button>
+  </header>
+
+  <div class="host-body">
+
+    <!-- waiting overlay -->
+    <div id="dashboard-not-found">
+      <div class="waiting-title">Waiting for lobby<span class="dots"></span></div>
+      <p class="waiting-sub">
+        No game found for code <strong id="dnf-code" style="color:var(--gold)"></strong>.<br/>
+        This updates automatically once the host creates a lobby.
+      </p>
+    </div>
+
+    <!-- ── LEFT ── -->
+    <div class="host-left">
+
+      <div class="code-block">
+        <p class="code-label">Room code</p>
+        <div class="game-code" id="game-code-display">????</div>
+      </div>
+
+      <div class="join-steps">
+        <p class="join-steps-title">How to join</p>
+        <div class="join-step">
+          <div class="join-step-num">1</div>
+          <div class="join-step-text">Go to <span class="url">au.sillyprootsoda.com</span></div>
+        </div>
+        <div class="join-step">
+          <div class="join-step-num">2</div>
+          <div class="join-step-text">Tap <strong>Online</strong> and enter your <strong>name</strong></div>
+        </div>
+        <div class="join-step">
+          <div class="join-step-num">3</div>
+          <div class="join-step-text">Enter code <strong id="inline-code">????</strong></div>
+        </div>
+      </div>
+
+      <div class="left-stats">
+        <div class="left-stat">
+          <span class="left-stat-label">Host</span>
+          <span class="left-stat-value" id="stat-host">—</span>
+        </div>
+        <div class="left-stat">
+          <span class="left-stat-label">Players</span>
+          <span class="left-stat-value" id="stat-players">0 / 10</span>
+        </div>
+        <div class="left-stat">
+          <span class="left-stat-label">Impostors</span>
+          <span class="left-stat-value" id="stat-impostors">—</span>
+        </div>
+        <div class="left-stat">
+          <span class="left-stat-label">Phase</span>
+          <span class="left-stat-value" id="stat-phase">Lobby</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CENTRE ── -->
+    <div class="host-centre">
+      <div class="section-header">
+        <h3>Players</h3>
+        <span class="count-badge" id="player-count-badge">0</span>
+      </div>
+      <div id="players-grid"></div>
+    </div>
+
+    <!-- ── RIGHT: chat ── -->
+    <div class="host-right">
+      <div class="section-header">
+        <h3>Meeting chat</h3>
+        <span class="count-badge" id="chat-count-badge">0</span>
+      </div>
+      <div id="chat-log">
+        <div class="chat-empty-state" id="chat-empty">
+          <div class="chat-empty-icon">💬</div>
+          <div class="chat-empty-text">Chat will appear here during meetings</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+'use strict';
+
+const JOIN_URL           = 'https://au.sillyprootsoda.com';
+const DASHBOARD_BASE_URL = 'https://amongapi.sillyprootsoda.com';
+const DASHBOARD_POLL_MS  = 1000;
+
+const COLOR_HEX = [
+  '#c51111','#132ed1','#117f2d','#ed54ba','#ef7d0d',
+  '#f5f557','#3f474e','#d6e0f0','#6b2fbb','#71491e',
+  '#38fedc','#50ef39','#ff8c00','#1e1eff','#8b0000',
+  '#ffffff','#006d63','#7d19d7','#ff9933','#6666ff',
+];
+
+// ── state ──
+let pollTimer = null, pollCode = null, inFlight = false;
+let lastSeq = -1, dashState = null;
+let chatMessages = [];  // accumulated across meetings (no longer wiped)
+let lastChatLen = 0;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── polling ──
+function startPolling(code) {
+  stopPolling();
+  pollCode = code; lastSeq = -1; dashState = null;
+  chatMessages = []; lastChatLen = 0;
+  poll();
+  pollTimer = setInterval(poll, DASHBOARD_POLL_MS);
+}
+function stopPolling() {
+  if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+  pollCode = null; inFlight = false;
+}
+
+async function poll() {
+  if (!pollCode || inFlight) return;
+  inFlight = true;
+  try {
+    const res = await fetch(`${DASHBOARD_BASE_URL}/dashboard/${encodeURIComponent(pollCode)}`, { cache: 'no-store' });
+    if (res.status === 404) { showNotFound(pollCode); return; }
+    if (!res.ok) return;
+    const data = await res.json();
+    showNotFound(null);
+    update(data);
+  } catch (e) {
+    console.error('poll failed', e);
+  } finally {
+    inFlight = false;
+  }
+}
+
+function showNotFound(code) {
+  const el = document.getElementById('dashboard-not-found');
+  if (code) { document.getElementById('dnf-code').textContent = code; el.classList.add('show'); }
+  else el.classList.remove('show');
+}
+
+function update(data) {
+  dashState = data;
+  const isNew = data.eventSeq !== lastSeq;
+  if (isNew) lastSeq = data.eventSeq;
+
+  // accumulate chat — merge new messages, never wipe
+  if (data.chat && data.chat.length) {
+    const existingKeys = new Set(chatMessages.map(m => m.playerId + '|' + m.timestamp));
+    for (const m of data.chat) {
+      const k = m.playerId + '|' + m.timestamp;
+      if (!existingKeys.has(k)) {
+        chatMessages.push(m);
+        existingKeys.add(k);
+      }
+    }
+  }
+
+  renderAll(data);
+}
+
+// ── render ──
+function renderAll(data) {
+  const phaseMap = { lobby:'Lobby', playing:'In Game', discussion:'Discussion', voting:'Voting', results:'Results', ended:'Ended' };
+  const phase = data.phase || 'lobby';
+  const phaseLabel = phaseMap[phase] || phase;
+
+  // header badge
+  const badge = document.getElementById('phase-badge');
+  badge.textContent = phaseLabel;
+  badge.className = `phase-badge ${phase}`;
+
+  // stats
+  const total = (data.players || []).length;
+  const max = data.maxPlayers || 10;
+  document.getElementById('stat-players').textContent = `${total} / ${max}`;
+  document.getElementById('player-count-badge').textContent = total;
+  document.getElementById('stat-impostors').textContent = data.numImpostors || '—';
+  document.getElementById('stat-phase').textContent = phaseLabel;
+
+  const hostP = (data.players || []).find(p => p.id === data.hostId);
+  document.getElementById('stat-host').textContent = hostP ? hostP.name : '—';
+
+  renderPlayers(data);
+  renderChat();
+}
+
+// ── players ──
+const _spriteImg = new Image();
+_spriteImg.src = 'white.png';
+
+function renderPlayers(data) {
+  const grid = document.getElementById('players-grid');
+  const players = data.players || [];
+
+  if (!players.length) {
+    grid.innerHTML = '<div style="color:var(--text-dim);font-size:.85rem;padding:20px;grid-column:1/-1;text-align:center">Waiting for players…</div>';
+    return;
+  }
+
+  const voterSet = new Set(Object.keys(data.votes || {}).map(Number));
+
+  const html = players.map(p => {
+    const isHost = p.id === data.hostId;
+    const isDead = p.isDead;
+    const hasTags = isHost || isDead;
+    let cls = 'player-card';
+    if (isDead) cls += ' is-dead';
+    if (isHost) cls += ' is-host';
+
+    const tags = [];
+    if (isHost) tags.push('<span class="ptag ptag-host">HOST</span>');
+    if (isDead) tags.push('<span class="ptag ptag-dead">DEAD</span>');
+
+    return `<div class="${cls}">
+      <div class="player-sprite-wrap">
+        <canvas class="player-sprite" width="38" height="38" data-color="${escA(COLOR_HEX[p.colorId] || '#888')}"></canvas>
+      </div>
+      <div class="player-info">
+        <div class="player-name-text">${escH(p.name || '')}</div>
+        ${hasTags ? `<div class="player-tag-row">${tags.join('')}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.innerHTML = html;
+  tintAll(grid);
+}
+
+function tintAll(container) {
+  container.querySelectorAll('canvas.player-sprite').forEach(cv => {
+    const hex = cv.dataset.color || '#888';
+    const ctx = cv.getContext('2d');
+    const w = cv.width, h = cv.height;
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(_spriteImg, 0, 0, w, h);
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.fillStyle = hex; ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.drawImage(_spriteImg, 0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+    };
+    if (_spriteImg.complete && _spriteImg.naturalWidth) draw();
+    else _spriteImg.addEventListener('load', draw, { once: true });
+  });
+}
+
+// ── chat ──
+function renderChat() {
+  const log = document.getElementById('chat-log');
+  const empty = document.getElementById('chat-empty');
+  const badge = document.getElementById('chat-count-badge');
+
+  badge.textContent = chatMessages.length;
+
+  if (!chatMessages.length) {
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // only append new messages, don't rebuild
+  if (chatMessages.length === lastChatLen) return;
+  const newMsgs = chatMessages.slice(lastChatLen);
+  lastChatLen = chatMessages.length;
+
+  for (const m of newMsgs) {
+    const color = m.colorHex || '#888';
+    const time = m.timestamp ? new Date(m.timestamp * 1000).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}) : '';
+
+    const div = document.createElement('div');
+    div.className = 'chat-msg';
+    div.innerHTML = `
+      <div class="chat-bubble-header">
+        <canvas class="chat-avatar" width="26" height="26" data-color="${escA(color)}"></canvas>
+        <span class="chat-name" style="color:${escA(color)}">${escH(m.playerName)}</span>
+        ${time ? `<span class="chat-time">${escH(time)}</span>` : ''}
+      </div>
+      <div class="chat-bubble">${escH(m.text)}</div>
+    `;
+    log.appendChild(div);
+
+    // tint the avatar canvas
+    const av = div.querySelector('.chat-avatar');
+    if (av) {
+      const ctx = av.getContext('2d');
+      const draw = () => {
+        ctx.clearRect(0, 0, 26, 26);
+        ctx.drawImage(_spriteImg, 0, 0, 26, 26);
+        ctx.globalCompositeOperation = 'multiply';
+        ctx.fillStyle = color; ctx.fillRect(0, 0, 26, 26);
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.drawImage(_spriteImg, 0, 0, 26, 26);
+        ctx.globalCompositeOperation = 'source-over';
+      };
+      if (_spriteImg.complete && _spriteImg.naturalWidth) draw();
+      else _spriteImg.addEventListener('load', draw, { once: true });
+    }
+  }
+
+  // auto-scroll only if user is near bottom
+  const atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 80;
+  if (atBottom) log.scrollTop = log.scrollHeight;
+}
+
+// ── UI ──
+function showDashboard(code) {
+  document.getElementById('game-code-display').textContent = code;
+  document.getElementById('inline-code').textContent = code;
+  document.getElementById('stat-host').textContent = '—';
+  document.getElementById('stat-players').textContent = `0 / 10`;
+  document.getElementById('stat-impostors').textContent = '—';
+  document.getElementById('stat-phase').textContent = 'Lobby';
+  document.getElementById('players-grid').innerHTML = '';
+  document.getElementById('chat-log').innerHTML = '<div class="chat-empty-state" id="chat-empty"><div class="chat-empty-icon">💬</div><div class="chat-empty-text">Chat will appear here during meetings</div></div>';
+  document.getElementById('chat-count-badge').textContent = '0';
+  showScreen('hosting');
+  showNotFound(null);
+  startPolling(code);
+}
+
+function submitCode() {
+  const raw = document.getElementById('code-input').value.trim().toUpperCase();
+  const err = document.getElementById('code-error');
+  if (!/^[A-Z]{4}$/.test(raw)) { err.style.display = 'block'; document.getElementById('code-input').focus(); return; }
+  err.style.display = 'none';
+  showDashboard(raw);
+}
+
+document.getElementById('watch-btn').onclick = submitCode;
+document.getElementById('code-input').onkeydown = e => { if (e.key === 'Enter') submitCode(); };
+document.getElementById('code-input').oninput = e => { e.target.value = e.target.value.toUpperCase(); };
+document.getElementById('header-back').onclick = () => {
+  stopPolling();
+  showNotFound(null);
+  dashState = null; lastSeq = -1; chatMessages = []; lastChatLen = 0;
+  document.getElementById('code-input').value = '';
+  showScreen('landing');
+};
+
+// ── utils ──
+function escH(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escA(s) { return escH(s); }
+</script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Colt 45's Studios™</title>
+  <link rel="icon" type="image/png" href="https://media.gq.com/photos/5fbd3397fff3e5e56de13fc1/16:9/w_2240,c_limit/Riz_Playlist.jpg">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GT-5TNLZNSF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'GT-5TNLZNSF');
+  </script>
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCKwpU_qytqc4WDBsdoBchUJ4givtAiABE",
+    authDomain: "rogers-studios.firebaseapp.com",
+    projectId: "rogers-studios",
+    storageBucket: "rogers-studios.firebasestorage.app",
+    messagingSenderId: "769939785134",
+    appId: "1:769939785134:web:350f204e067fc4f248b43f",
+    measurementId: "G-KEPMVDF5TZ"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    .top-header-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      box-sizing: border-box;
+      padding: 0 30px;
+    }
+
+    .header-left {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+
+    .header-center {
+      margin: 0;
+      font-size: 2rem;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+
+    .tab-navigation {
+      position: fixed;
+      top: 100px;              
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;    
+      justify-content: center;
+      gap: 30px;              
+      z-index: 1000;
+      width: auto;
+    }
+
+    .tab-btn {
+      background: #1a1a1a;
+      color: #888;
+      border: 2px solid #333;
+      padding: 10px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;    
+    }
+
+    .tab-btn2 {
+      background: #ff0000;
+      color: #888;
+      border: 2px solid #333;
+      padding: 10px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 30px;
+      /*cursor: pointer; */
+      transition: all 0.3s ease;
+      white-space: nowrap;   
+    }
+
+    .tab-btn:hover {
+      color: white;
+      border-color: #ffffff;
+    }
+
+    .tab-btn.active {
+      color: white;
+      background: #000000;
+      border-color: #ffffff;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      background: rgba(40, 40, 40, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      padding: 6px 12px;
+      width: 320px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: width 0.3s ease;
+    }
+
+    .search-container.expanded {
+      width: 400px;
+    }
+
+    .search-container input {
+      flex: 1;
+      padding: 10px 15px;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-size: 16px;
+    }
+
+    .search-container button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .section-title {
+      color: #ff0000;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 50px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      text-decoration: underline #363535;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 20px 200px;
+      max-width: 1700px;
+      margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .main-wrapper {
+      margin-top: 180px;
+    }
+
+    .card {
+      position: relative;
+      background: linear-gradient(145deg, #1a1a1a, #2b2b2b);
+      border-radius: 15px;
+      width: 200px;
+      height: 120px;
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: scale(1);
+      animation: fadePop 0.5s forwards;
+      transition: transform 0.25s, box-shadow 0.25s;
+      border: 2px solid #004e7a;
+      margin: auto;
+    }
+
+    .card:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 15px #00aaff, 0 0 30px #0077cc;
+      border-color: #00aaff;
+    }
+
+    .movie-card {
+      border-color: #7a0000;
+    }
+    
+    .movie-card:hover {
+      box-shadow: 0 0 15px #ff0000, 0 0 30px #cc0000;
+      border-color: #ff0000;
+    }
+
+    .card a {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      z-index: 2;
+    }
+
+    .text {
+      position: absolute;
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      width: 150px;
+      text-align: center;
+      z-index: 10;
+    }
+    .text.left { left: 20px; }
+    .text.right { right: 20px; }
+
+    @keyframes fadePop {
+      0% { opacity: 0; transform: scale(0.85); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="top-header-banner">
+    <h1 class="header-left">Blocked Counter: 4</h1>
+    <h1 class="header-center">Colt 45's Studios™</h1>
+  </div>
+
+  <div class="tab-navigation">
+    <button class="tab-btn active" onclick="switchTab('gamesTab', this)">Games</button>
+    
+    <div class="search-container" id="searchContainer">
+      <input type="text" id="gameSearch" placeholder="Search...">
+      <button id="searchBtn">🔍</button>
+    </div>
+    
+    <button class="tab-btn2" onclick="switchTab('moviesTab', this)">Movies</button>
+  </div>
+
+  <!-- Static side text -->
+  <!-- <div class="text left" style="top: 140px;"><p>Nice Try Board of Education</p></div> !-->
+  <div class="text left" style="top: 140px;"><p>The Board of Education gave me a call on 9/29/2026.</p></div>
+  <!-- <div class="text right" style="top: 140px;"><p>"It's the thought that counts" -CB</p></div> !-->
+  <div class="text right" style="top: 140px;"><p>The website has been up and running since October 6th, 2025.</p></div> 
+  <!-- <div class="side-text left" style="top: 270px;"><p>WILL NOT BE UPDATED REST OF SCHOOL YEAR</p></div> !-->
+  <div class="text left" style="top: 340px;"><p>They have given me a warning about the website.</p></div>
+  <!--<div class="side-text right" style="top: 270px;"><p>WILL NOT BE UPDATED REST OF SCHOOL YEAR</p></div> !-->
+  <div class="text right" style="top: 340px;"><p>I have taken all of the movies down.</p></div>
+  <!-- <div class="text left" style="top: 270px;"><p>UPDATE: I have removed all blocked games.</p></div> !-->
+  <!-- <div class="text right" style="top: 270px;"><p>UPDATE: I will be updating all of the games.</p></div> !-->
+  <!-- <div class="text left" style="top: 450px;"><p>I am not responsible for what games you play!</p></div> !-->
+  <!-- <div class="text right" style="top: 450px;"><p>I am not responsible for what movies you watch!</p></div> !-->
+  <!-- <img class="side-text left" style="top: 800px;" src="ads/DEFUND.png" alt="AD">
+  <img class="side-text right" style="top: 800px;" src="ads/ROUNDABOUTS.png" alt="AD"> !-->
+
+
+  <div class="main-wrapper">
+    <!-- GAMES SECTION TAB -->
+    <div id="gamesTab" class="tab-content active">
+      <div class="content-grid" id="gameList">
+        <div class="card"><a href="games/Chrome Dino/index.html" target="_blank">Chrome Dino</a></div>
+        <div class="card"><a href="games/Friday-Night-Funkin/index.html" target="_blank">Friday Night Funkin'</a></div>
+        <div class="card"><a href="html5games/otheridlebreakout.html" target="_blank">Breakshoot Idle</a></div>
+        <div class="card"><a href="html5games/BouncyMotors.html" target="_blank">Bouncy Motors</a></div>
+        <div class="card"><a href="games/snake/index.html" target="_blank">Snake</a></div>
+        <!-- <div class="card"><a href="html5games/SliceMasters.html" target="_blank">Slice Masters</a></div> !-->
+        <div class="card"><a href="games/Drift-Boss/index.html" target="_blank">Drift Boss</a></div> <!--  !-->
+        <div class="card"><a href="html5games/TinyFishing.html" target="_blank">Tiny Fishing</a></div>
+        <!-- <div class="card"><a href="html5games/Webecomewhatweabehold.html" target="_blank">We become what We behold</a></div> !-->
+        <div class="card"><a href="games/Slope-Game/index.html" target="_blank">Slope</a></div>
+        <!-- <div class="card"><a href="html5games/Minato.html" target="_blank">Minato</a></div> !-->
+        <!-- <div class="card"><a href="html5games/highwayracer.html" target="_blank">Highway Racer</a></div> !-->
+        <div class="card"><a href="games/polytrack/index.html" target="_blank">Poly Track</a></div>
+        <!-- <div class="card"><a href="html5games/StickMenParkor.html" target="_blank">Stick Man Parkour</a></div> !-->
+        <!-- <div class="card"><a href="html5games/BasketballRandomPro.html" target="_blank">Basketball Random Pro 2P</a></div> !-->
+        <div class="card"><a href="games/drift-hunters/index.html" target="_blank">Drift Hunters</a></div>
+        <div class="card"><a href="games/TapTapShots/index.html" target="_blank">Tap Tap Shots</a></div>
+        <!-- <div class="card"><a href="html5games/SoccerRandomPro.html" target="_blank">Soccer Random Pro 2P</a></div> !-->
+        <!-- <div class="card"><a href="html5games/Bloxorz.html" target="_blank">Bloxorz</a></div> !--> 
+        <!-- <div class="card"><a href="html5games/WorldsHardestGame.html" target="_blank">World's Hardest Game</a></div> !-->
+        <!-- <div class="card"><a href="html5games/rooftopsniper.html" target="_blank">Rooftop Snipers</a></div> !-->
+        <!-- <div class="card"><a href="html5games/drunkenduel2.html" target="_blank">Drunken Duel 2</a></div> !-->
+        <!-- <div class="card"><a href="html5games/theimpossiblequiz.html" target="_blank">The Impossible Quiz</a></div> !-->
+        <div class="card"><a href="games/Idle Breakout/index.html" target="_blank">Idle Breakout</a></div>
+        <!-- <div class="card"><a href="html5games/flappybrid.html" target="_blank">Flappy Bird</a></div> !-->
+        <div class="card"><a href="html5games/wheeliebike.html" target="_blank">Wheelie Bike</a></div>
+        <!-- <div class="card"><a href="html5games/GetonTop.html" target="_blank">Get on Top 2P</a></div> !-->
+        <div class="card"><a href="games/run3/index.html" target="_blank">Run 3</a></div>
+        <div class="card"><a href="games/numbergame/index.html" target="_blank">2048</a></div>
+        <!-- <div class="card"><a href="html5games/trafficrider.html" target="_blank">Traffic Rider</a></div> !-->
+        <!-- <div class="card"><a href="html5games/dreader.html" target="_blank">Dreader</a></div> !-->
+        <div class="card"><a href="games/level-devil/index.html" target="_blank">Level Devil</a></div>
+        <!-- <div class="card"><a href="html5games/fnafOrgi.html" target="_blank">FNAF Original</a></div> !-->
+        <!-- <div class="card"><a href="html5games/baldisbasics.html" target="_blank">Baldi's Basics</a></div> !-->
+        <!-- <div class="card"><a href="html5games/granny.html" target="_blank">Granny</a></div> !-->
+        <!-- <div class="card"><a href="html5games/backrooms.html" target="_blank">Backrooms</a></div> !-->
+        <div class="card"><a href="games/moto-x3m/index.html" target="_blank">Moto X3M</a></div>
+        <div class="card"><a href="html5games/goescape.html" target="_blank">Go Escape</a></div>
+        <!-- <div class="card"><a href="html5games/tombofmask.html" target="_blank">Tomb of the Mask</a></div> !-->
+        <!-- <div class="card"><a href="html5games/drunkenboxing.html" target="_blank">Drunken Boxing</a></div> !-->
+        <div class="card"><a href="games/blackjack/index.html" target="_blank">Blackjack</a></div>
+        <div class="card"><a href="games/roulette/index.html" target="_blank">Roulette</a></div>
+        <!-- <div class="card"><a href="html5games/poker.html" target="_blank">3 Card Poker</a></div> !-->
+        <div class="card"><a href="games/craps/index.html" target="_blank">Craps</a></div>
+        <!-- <div class="card"><a href="html5games/lottery.html" target="_blank">Baccarat</a></div> !-->
+        <div class="card"><a href="games/adcapitalist/index.html" target="_blank">AdVenture Capitalist</a></div>
+        <div class="card"><a href="games/MrBullet/index.html" target="_blank">Mr. Bullet</a></div>
+        <!-- <div class="card"><a href="html5games/knifehit.html" target="_blank">Knife Hit</a></div> !-->
+        <!-- <div class="card"><a href="html5games/basketballgm.html" target="_blank">Basketball GM</a></div> !-->
+        <!-- <div class="card"><a href="html5games/asseesmentexamination.html" target="_blank">Assessment Examination</a></div> !-->
+        <div class="card"><a href="games/BounceMasters/index.html" target="_blank">Bounce Masters</a></div>
+        <!-- <div class="card"><a href="html5games/angrybirds.html" target="_blank">Angry Birds</a></div> !-->
+        <!-- <div class="card"><a href="html5games/bitlifesim.html" target="_blank">Bitlife Simulator</a></div> !-->
+        <!-- <div class="card"><a href="html5games/learntofly3.html" target="_blank">Learn to Fly 3</a></div> !-->
+        <div class="card"><a href="games/Ovo/index.html" target="_blank">OvO</a></div>
+        <!-- <div class="card"><a href="html5games/flipbottle.html" target="_blank">Flip Bottle</a></div> !-->
+        <!-- <div class="card"><a href="html5games/sausageflip.html" target="_blank">Sausage Flip</a></div> !-->
+        <!-- <div class="card"><a href="html5games/Binairo.html" target="_blank">Binairo</a></div> !-->
+        <!-- <div class="card"><a href="html5games/retrobowl.html" target="_blank">Retro Bowl</a></div> !-->
+        <!-- <div class="card"><a href="html5games/crossyroad.html" target="_blank">Crossy Road</a></div> !-->
+        <div class="card"><a href="games/cookieclicker-master/index.html" target="_blank">Cookie Clicker</a></div>
+        <!-- <div class="card"><a href="html5games/CoreBall.html" target="_blank">Coreball</a></div> !-->
+        <!-- <div class="card"><a href="html5games/slideinthewoods.html" target="_blank">Slide in the Woods</a></div> !-->
+        <!-- <div class="card"><a href="html5games/stack.html" target="_blank">Stack</a></div> !-->
+        <div class="card"><a href="games/factory-balls-forever/index.html" target="_blank">Factory Balls</a></div>
+        <!-- <div class="card"><a href="html5games/paperclips.html" target="_blank">Universal Paperclips</a></div> !-->
+        <!-- <div class="card"><a href="html5games/gunblood.html" target="_blank">Gunblood</a></div> !-->
+        <!-- <div class="card"><a href="html5games/Pokemon.html" target="_blank">PokeRogue</a></div> !-->
+        <div class="card"><a href="games/subway_surfers/index.html" target="_blank">Subway Surfers</a></div>
+        <!-- <div class="card"><a href="html5games/motox3m2.html" target="_blank">Moto X3M 2</a></div> !-->
+        <!-- <div class="card"><a href="html5games/leveldevil2.html" target="_blank">Level Devil 2</a></div> !-->
+        <!-- <div class="card"><a href="html5games/ballblast.html" target="_blank">Ball Blast</a></div> !-->
+        <!-- <div class="card"><a href="html5games/gunspin.html" target="_blank">GunSpin</a></div> !-->
+        <div class="card"><a href="games/state.io/index.html" target="_blank">State.io</a></div>
+        <!-- <div class="card"><a href="html5games/stackball.html" target="_blank">Stack Ball</a></div> !-->
+        <div class="card"><a href="games/stickman-hook/index.html" target="_blank">Stick Man Hook</a></div>
+        <!-- <div class="card"><a href="html5games/hollowknight.html" target="_blank">Hollow Knight</a></div> !-->
+        <!-- <div class="card"><a href="html5games/unfairflips.html" target="_blank">Unfair Flips</a></div> !-->
+        <!-- <div class="card"><a href="html5games/basketballstars.html" target="_blank">Basketball Stars</a></div> !-->
+        <div class="card"><a href="games/8-ball-pool/index.html" target="_blank">8 Ball Pool</a></div>
+        <!-- <div class="card"><a href="html5games/escaperoad.html" target="_blank">Escape Road</a></div> !-->
+        <!-- <div class="card"><a href="html5games/boxingrandom.html" target="_blank">Boxing Random</a></div> !-->
+        <!-- <div class="card"><a href="html5games/backyardbaseball.html" target="_blank">Backyard Baseball</a></div> !-->
+        <div class="card"><a href="games/balatro/index.html" target="_blank">Balatro</a></div>
+        <!-- <div class="card"><a href="html5games/undertale.html" target="_blank">Undertale</a></div> !--> 
+        <!-- <div class="card"><a href="games/bendy/bendy.html" target="_blank">Bendy and the Ink Machine</a></div> !-->
+        <!--<div class="card"><a href="games/ultrakill/ultrakill.html" target="_blank">Ultrakill</a></div>-->
+        <div class="card"><a href="html5games/shadowescape.html" target="_blank">Personal Game (Scratch)</a></div>
+        <div class="card"><a href="html5games/brotato.html" target="_blank">Brotato</a></div>
+        <!-- <div class="card"><a href="games/people-playground/people-playground.html" target="_blank">People-Playground</a></div> !-->
+        <!-- <div class="card"><a href="games/raft/raft.html" target="_blank">Raft</a></div> !-->
+        <div class="card"><a href="emulator/games/Pac-Man.html" target="_blank">Pac-Man</a></div>
+        <!-- <div class="card"><a href="html5games/supermario64.html" target="_blank">Super Mario 64</a></div> !-->
+        <div class="card"><a href="emulator/games/punchout.html" target="_blank">Mike Tyson's Punch-Out</a></div>
+        <div class="card"><a href="emulator/games/supermariobros.html" target="_blank">Super Mario Bros.</a></div>
+        <div class="card"><a href="emulator/games/donkeykong.html" target="_blank">Donkey Kong</a></div>
+        <div class="card"><a href="emulator/games/galaga.html" target="_blank">Galaga</a></div>
+        <div class="card"><a href="emulator/games/tetris.html" target="_blank">Tetris</a></div>
+        <!-- <div class="card"><a href="html5games/MarioKart.html" target="_blank">Mario Kart</a></div> -->
+        <!-- <div class="card"><a href="html5games/streetfighter4.html" target="_blank">Street Fighter IV</a></div> -->
+        <div class="card"><a href="emulator/games/doom1.html" target="_blank">DOOM</a></div>
+        <!-- <div class="card"><a href="html5games/gta.html" target="_blank">GTA Advance</a></div> -->
+        <div class="card"><a href="emulator/games/ataribreakout.html" target="_blank">Atari Breakout</a></div>
+        <div class="card"><a href="emulator/games/balloonfight.html" target="_blank">Balloon Fight</a></div>
+        <div class="card"><a href="emulator/games/beavis and butthead.html" target="_blank">Beavis and Butthead</a></div>
+        <div class="card"><a href="emulator/games/castlevania.html" target="_blank">Castlevania</a></div>
+        <div class="card"><a href="emulator/games/frogger.html" target="_blank">Frogger</a></div>
+        <div class="card"><a href="emulator/games/monopoly.html" target="_blank">Monopoly</a></div>
+        <div class="card"><a href="emulator/games/nascar.html" target="_blank">Nascar 2000</a></div>
+        <div class="card"><a href="emulator/games/sonic the hedgehog.html" target="_blank">Sonic The Hedgehog</a></div>
+        <div class="card"><a href="emulator/games/WWF no mercy.html" target="_blank">WWF No Mercy</a></div>
+        <div class="card"><a href="emulator/games/tecmosuperbowl.html" target="_blank">Tecmo Super Bowl</a></div>
+        <!-- <div class="card"><a href="html5games/R.E.P.O.html" target="_blank">R.E.P.O</a></div> !-->
+        <div class="card"><a href="html5games/slimerancher.html" target="_blank">Slime Rancher</a></div>
+        <!-- <div class="card"><a href="html5games/thats not my neighbor.html" target="_blank">That's Not my Neighbor</a></div> -->
+        <div class="card"><a href="html5games/Clover Pit.html" target="_blank">Clover Pit</a></div>
+        <!-- <div class="card"><a href="html5games/minecraft.html" target="_blank">Minecraft 1.12.2</a></div> -->
+        <div class="card"><a href="love2d/htmls/logoanimation.html" target="_blank">Logo Animation</a></div>
+        <div class="card"><a href="games/amaze/amaze.html" target="_blank">Amaze</a></div>
+        <div class="card"><a href="games/aquapark-io/aquapark-io.html" target="_blank">Aquapark.io</a></div>
+        <div class="card"><a href="games/bowmasters/bowmasters.html" target="_blank">Bowmasters</a></div>
+        <div class="card"><a href="games/flappy dunk/flappy-dunk.html" target="_blank">Flappy Dunk</a></div>
+        <div class="card"><a href="games/hill-climb-racing-lite/hill-climb-racing-lite.html" target="_blank">Hill Climb Racing Lite</a></div>
+        <div class="card"><a href="games/dont you lecture me/Dont-You-Lecture-Me.html" target="_blank">30$ Haircut</a></div>
+        <!-- <div class="card"><a href="games/dreadheadparkour/dreadhead-parkour.html" target="_blank">Dreadhead Parkour</a></div> !-->
+        <!-- <div class="card"><a href="games/idledice/idle-dice.html" target="_blank">Idle Dice</a></div> !-->
+        <div class="card"><a href="games/sandboxels/sandboxels.html" target="_blank">Sandboxels</a></div>
+        <!-- <div class="card"><a href="games/temple-run-2/temple-run-2.html" target="_blank">Temple Run 2</a></div> !-->
+        <!-- <div class="card"><a href="games/time shooter/time-shooter.html" target="_blank">Time Shooter</a></div> !-->
+        <div class="card"><a href="games/geometry-dash/index.html" target="_blank">Geometry-Dash</a></div>
+        <!-- <div class="card"><a href="games/iron-lung/iron-lung.html" target="_blank">IRON LUNG</a></div> !-->
+        <!-- <div class="card"><a href="games/Inn Over Your Head/inn_over_your_head.html" target="_blank">Inn Over Your Head</a></div> !-->
+        <!-- <div class="card"><a href="games/karlson/karlson.html" target="_blank">Karlson</a></div>  !-->
+        <!-- <div class="card"><a href="games/Dont_Touch_Anything/dont_touch_anything.html" target="_blank">Don't Touch Anything</a></div> !-->
+        <!-- <div class="card"><a href="games/The_MachinEGG/The_MachinEGG.html" target="_blank">The MachinEGG</a></div> !-->
+        <div class="card"><a href="games/Stardew_Valley/stardew-valley.html" target="_blank">Stardew Valley</a></div>
+        <!-- <div class="card"><a href="games/jelly-drift/index.html" target="_blank">Jelly-Drift</a></div> !-->
+        <div class="card"><a href="games/untitled-goose-game/index.html" target="_blank">Goose Game</a></div>
+        <div class="card"><a href="games/basketball-superstars/index.html" target="_blank">Basketball Superstars</a></div>
+        <div class="card"><a href="html5games/crazycattle3d.html" target="_blank">Crazy Cattle 3D</a></div>
+        <!-- <div class="card"><a href="html5games/deltarune.html" target="_blank">Deltarune</a></div> !-->
+        <!-- <div class="card"><a href="html5games/jetpackjoyride.html" target="_blank">Jetpack Joyride</a></div> -->
+        <!-- <div class="card"><a href="games/BlockBlast/index.html" target="_blank">Blockblast</a></div> !-->
+        <!-- <div class="card"><a href="html5games/justhitthebutton.html" target="_blank">Just Hit the Button</a></div> !-->
+        <!-- <div class="card"><a href="html5games/Nation-States.html" target="_blank">NationStates</a></div> -->
+        <!-- <div class="card"><a href="games/bergentruck/BERGENTRUCK_201X.html" target="_blank">BERGENTRUCK</a></div> !-->
+        <div class="card"><a href="games/CheeseRolling/index.html" target="_blank">CheeseRolling</a></div>
+        <div class="card"><a href="games/PlagueInc/index.html" target="_blank">Plague Inc.</a></div>
+        <div class="card"><a href="games/WhosYourDaddy/index.html" target="_blank">Who's Your Daddy?!</a></div>
+        <div class="card"><a href="games/hotline-miami/index.html" target="_blank">Hotline Miami</a></div>
+        <!-- <div class="card"><a href="games/TreesHateYou/index.html" target="_blank">Trees Hate You</a></div> !-->
+        <div class="card"><a href="games/BTD5/index.html" target="_blank">Bloons TD 5</a></div>
+        <div class="card"><a href="games/binding-of-isaac/index.html" target="_blank">Binding Of Issac</a></div>
+        <div class="card"><a href="html5games/PvZ.html" target="_blank">Plants Vs. Zombies</a></div>
+        <div class="card"><a href="games/LobCorp/index.html" target="_blank">Lobotomy Corporation</a></div>
+        <!-- <div class="card"><a href="games/AngryBirds2/index.html" target="_blank">Angry Birds 2</a></div> !-->
+        <div class="card"><a href="games/cuphead/index.html" target="_blank">Cuphead</a></div>
+        <div class="card"><a href="games/AgesOfConflict/index.html" target="_blank">Ages of Conflict</a></div>
+        <div class="card"><a href="games/cluster-rush/index.html" target="_blank">Cluster Rush</a></div>
+        <!-- <div class="card"><a href="games/granny-2/index.html" target="_blank">Granny 2</a></div> !-->
+        <div class="card"><a href="games/hollowknight-silksong/index.html" target="_blank">Hollowknight Silksong</a></div>
+        <div class="card"><a href="games/tabs/index.html" target="_blank">(TABS)</a></div>
+        <div class="card"><a href="games/WebBloxDemo/index.html" target="_blank">Roblox Demo</a></div>
+        <div class="card"><a href="love2d/htmls/TSAgame.html" target="_blank">TSA Game Test</a></div>
+        <div class="card"><a href="games/amongus/v3/index.html" target="_blank">Among Us</a></div>
+        <div class="card"><a href="games/Buckshot/index.html" target="_blank">Buckshot Roulette</a></div>
+        <div class="card"><a href="games/Deltarune/index.html" target="_blank">Deltarune</a></div>
+        <div class="card"><a href="ruffle/htmls/whackyourboss.html" target="_blank">Whack Your Boss</a></div>
+        <div class="card"><a href="ruffle/htmls/theImpossibleQuiz.html" target="_blank">The Impossible Quiz</a></div>
+        <div class="card"><a href="ruffle/htmls/theWorldsHardestGame.html" target="_blank">The World's Hardest Game</a></div>
+        <div class="card"><a href="ruffle/htmls/tron.html" target="_blank">Tron</a></div>
+        <div class="card"><a href="ruffle/htmls/minesweeper.html" target="_blank">Minesweeper</a></div>
+        <div class="card"><a href="ruffle/htmls/Learn to Fly.html" target="_blank">Learn to Fly</a></div>
+        <div class="card"><a href="ruffle/htmls/Interactive Buddy.html" target="_blank">Interactive Buddy</a></div>
+        <div class="card"><a href="ruffle/htmls/Bloxorz.html" target="_blank">Bloxorz</a></div>
+        <div class="card"><a href="ruffle/htmls/earnToDie.html" target="_blank">Earn to Die</a></div>
+        <div class="card"><a href="ruffle/htmls/gunBlood.html" target="_blank">Gunblood</a></div>
+      </div>
+      <div id="governmentGames" class="government-games">
+        <h2 class="section-title" style="margin: 40px auto 20px; display: inline-block;">
+          Games I Stole From the Government
+        </h2>
+      </div>
+
+      <div class="content-grid" id="governmentGameList">
+        <div class="card"><a href="games/flappy-bill/index.html" target="_blank">Flappy Bill</a></div>
+        <div class="card"><a href="games/build-the-wall/index.html" target="_blank">Build the Wall</a></div>
+        <div class="card"><a href="games/rio-run/index.html" target="_blank">Rio Run</a></div>
+        <div class="card"><a href="games/supply-line/index.html" target="_blank">Supply Line</a></div>
+        <div class="card"><a href="games/trump-savings-tycoon/index.html" target="_blank">Trump Savings Tycoon</a></div>
+      </div>
+    </div>
+
+    <!-- MOVIES SECTION TAB -->
+    <div id="moviesTab" class="tab-content">
+      <div class="content-grid" id="movieList">
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1OY2ykpwXz9bBJ4stV4A8D9N5EDQk_K5s/preview" target="_blank">Ant-Man</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1EWYb2iJwhZY7IQWBpQSkw3OD03BUlNDO/preview" target="_blank">Avengers Endgame</a></div>        
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/12TIZOPs6KZ1E1A0E_0jzpJV57FlbcQ1y/preview" target="_blank">Apocalypse Z</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1hUGzfEJ5ApGKS5apSruI_Wi47h_K086j/preview" target="_blank">Amistad</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1loYo_okweWhxZXrgtimTEOc-r8bDLKQ7/preview" target="_blank">Abraham Lincoln: Vampire Hunter</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1u0VJgy5LzKqUvcRk-eyNcT_U19xlerlo/preview" target="_blank">An American Pickle</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1KPdoHIsGr7EXrGEsaCfBhw14FRAGfhZy/preview" target="_blank">Back to the Future</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1IN1cMQfQjdt0XGJFcHeULDO4I96TSCQB/preview" target="_blank">Barbie</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1K3AVO6vHAmRHOHBR-uqk35c_yy24rC8l/preview" target="_blank">Beetlejuice Beetlejuice</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1t59w3sJeTthlmi97L0yjUSxwx7LICI1m/preview" target="_blank">Childs Play/Chucky</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/13gXq4x9Y4nfLYlTFMH5pgUaMdrz43ZA8/preview" target="_blank">Creed</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1GgixyYS-0g8L9n7x4c1X0cWT4Q5aMofj/preview" target="_blank">Conjuring 2</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1-1gSgT9kbokMCfvRoKJRG_3Xr8RfjpQa/preview" target="_blank">Deadpool</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1e3TopQU2_96k3biuTbAJb3My5FmUhVvW/preview" target="_blank">Free Guy</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1yApaaICpHbeOdNP0No27HJJe6Wx_cWQT/preview" target="_blank">Forest Gump</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1yLHdofFPEuPg7-LaT1ovYIrNyV-wnO9z/preview" target="_blank">Fantastic Four 2005</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1pELp1rSXtRN77Z3G7Tx53RLp1ww7C68I/preview" target="_blank">Friday the 13th Part 1</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1sohGXVH0EQ0kwdwtCqpmj3nb67sIuHRH/preview" target="_blank">Ford Vs. Ferrari</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1lue4b7yqB_SwqDg_SPqtEQs-6mtLpq21/preview" target="_blank">Good Burger</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1dw3GmEYxqo0XBB2m4rEH1l9R8C4Fa0c4/preview" target="_blank">Ghost Rider</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1h4FB7LWa-AVG5DmOXHNT3TGh_iUHj12l/preview" target="_blank">Ghostbusters</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1nidrlPXnDvb5tNxxgtKqboNJfwK_W1p6/preview" target="_blank">Hidden Figures</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1x-1hKOSef5_gIyIzSnm-LzNGlZP7Yf09/preview" target="_blank">A Nightmare on Elm Street</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1n90GH5OgdYHxgUU1E3sxcrXCSGdpWTCl/preview" target="_blank">The Dictator</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1E6sx0NYz9SOqTDCp7LlkHQuUoJRB7-EW/preview" target="_blank">Michael</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1OweVAV5AxSStRqs0d37srl1TvLUASBaJ/preview" target="_blank">The Lego Movie</a></div>   
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/15Xl1PK_F0dvd8D-3Uhna_SdMB5rwQXXd/preview" target="_blank">Jimmy Neutron</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1t6eV4u0_JbuJLuwnV921LhgzgYv6gRfH/preview" target="_blank">Oppenheimer</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1rxw_kABue8sQem14wr0vo_FGhxZWZnbr/preview" target="_blank">John Wick</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1ZQnu5IVMsoP3Vj12dLR1ov-09e_s03KS/preview" target="_blank">Iron Lung</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1i7XX5-lMCglDIqI3yB5JnRZ9lPQ52hBs/preview" target="_blank">IT</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1oyPTezl4YX2ZP8l1HgzlrhEqOXA9oRUB/preview" target="_blank">IT Chapter 2</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/17vqFM7NCrqNZ26mnD2kWrozIEcATXMzs/preview" target="_blank">Iron Man</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/17FS-cyh37yNPMFG9hcpCA_sSHbxncRHp/preview" target="_blank">Happy Gilmore 2</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1Mx-oZYRddlPC-IuX4DZOF_jP-i4Hw-Yq/preview" target="_blank">The Founder</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1Z6TDtKvKku7rw1zUCm65x_vQN1YboaTq/preview" target="_blank">The Karate Kid</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1KHQQSl9yzvRTbIC1yv8urt2FVdLLe3tM/preview" target="_blank">Mortal Kombat</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1ej5Nh4Aeva_FrcpA3Td2KH9yLGckOaBc/preview" target="_blank">Frankenstein</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/10uXQ-5xLixl-XcCyWVfAuX4cI1xoo6td/preview" target="_blank">Sleepy Hollow</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1Te3T1vJ5y7ki5bTM_OIC1Nnoke_Wu4Ji/preview" target="_blank">The Simpsons</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1IDgifEe0WTnDXEOXXqfAbAqx8PytAQMJ/preview" target="_blank">Little Rascals</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1NpJ973dAcmyu-tzkocmlp2eCm9b2TWxY/preview" target="_blank">The Sandlot</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1SObwSdiNq1ERS6Is0ESGdI14ng3ZDEiZ/preview" target="_blank">The Outsiders</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1RUB68_n3kP1Rg6k9rYFkRDlPtNhkFpPO/preview" target="_blank">Tyler Perrys: Joes College Road Trip</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/15PEj_YBIwb6H_VZiFeJ6SQwBFjGDPUeB/preview" target="_blank">Top Gun Maverick</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1JzvM3CzNu0fx1guUm-mo4GuKVkKI54vZ/preview" target="_blank">Shazam!</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/164sDIEcDm9hWViax1vpgKgLpzLb03RWN/preview" target="_blank">Scream</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1toa1Tg7pBhvxvN618A4xbtAZUiJfb7uK/preview" target="_blank">Steamboat Willie 1928</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1zfFHtWbSdw3xqXiJxxCfUTSXJhcBuMsn/preview" target="_blank">Mortal Kombat II</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/132VRXDYgfM3J8UyOQn5oDvaZ1TSxPQ09/preview" target="_blank">Lee Cronins: The Mummy</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/17B0A7bNqhg3HKBsWV3h4jhXtvbQ66Kdm/preview" target="_blank">Smokey and the Bandit</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1eV2sZ89S8HcpPhHOjDJLdczvBBETZpTy/preview" target="_blank">The Cannonball Run</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1IKFUWQvepw93uvYDe2k5jJ-rMRMvGC0W/preview" target="_blank">A Minecraft Movie</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1UqTHaBfe2dnRasDF0dC77bL3TtHJei_h/preview" target="_blank">Texas Chainsaw Massacre</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1Yk71vMyrReBHVdJZN6BYXD3FEvyrck8M/preview" target="_blank">Final Destination</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1-TE9lkC0vU_TB7Ad4tgz_FZD7FtvDT-b/preview" target="_blank">Formula 1</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1o2W1LHDeqtOOKuYZ73gwzt7QmhGhi_SN/preview" target="_blank">Men in Black</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1RCO80RIhdBgPClphIrz7_QVlXMo8CwN3/preview" target="_blank">Godzilla</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1xRh15M-MY0SmLBN1d9isS8DQ7Hq1CEKa/preview" target="_blank">Beetlejuice</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1nXnMMvru0M18mBuifobnCuIHij1dmdJf/preview" target="_blank">Jaws</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1ZMCQc9jVuO2rTgqiYY35Jo5S-jNVWU2w/preview" target="_blank">Full Metal Jacket</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1GLy_P2AF6LMnY_NUUzt_JvOn3ggfdgec/preview" target="_blank">Major Payne</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/14PGNohfGtZP_R2Df0nsefN1V0HUqU5ol/preview" target="_blank">Alien 1979</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1ZEBLNjZeqZK56PBkUDE2oyEw26xrfzeb/preview" target="_blank">Scary Movie</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1donk8O2cw8VeZwezUyx88xuYJzVVTf3f/preview" target="_blank">Herbie: Fully Loaded</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1Dwos7a5GRsIxtwALTELy2HmRK6cHp7Fh/preview" target="_blank">Shrek</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/18-HbsIP2Z2UY8UkBxpsMDSCmHkgzcOQK/preview" target="_blank">Talladega Nights</a></div>   
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1ugsnpWij3SdXlPTOUe8aTBL2BC2fdRTr/preview" target="_blank">Five Nights At Freddys</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/16kSyx5POziOxQ6bZJxqO2pKME_7vhlzi/preview" target="_blank">Five Nights At Freddys 2</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1IVwnzDDApzLH6lzK1MXVPDi9nqBxnAQd/preview" target="_blank">Donnie Darko</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1Cv28LkuB2gnCbmhqHme8eew83HORVOJq/preview" target="_blank">Halloween</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1BX0ItwRg-puM1U61xKIqEn7QxAfYfd0E/preview" target="_blank">Cocaine Bear</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1TsCmRLWt-XokDC87XhQrm_Cd1zGD84Po/preview" target="_blank">The Black Phone</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1QVUlHME_AygrFheSME-F0ClwmR18gDTa/preview" target="_blank">Fast and Furious</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1G1KR3OCag8SWN0KJWrPoXJIIE2tA9mg4/preview" target="_blank">The Terminator</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1iuI6FsTcPt7kk3By4XN-LnOkT1zSdXJW/preview" target="_blank">Rocky</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/10s--znvrrASCIY9PxW0hWVQenKRPcvPA/preview" target="_blank">Project Hail Mary</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1axq3q5OzTItwuDfwWNJTUGM7wgG7sSGO/preview" target="_blank">Jeepers Creepers</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1iMlOBjITAOkouvR9PIRhFvF7Z4XL8-Rc/preview" target="_blank">Pirates of the Caribbean</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1A3nwBx-k7odQHEkpNf0ajgZxcn2u9LfY/preview" target="_blank">Coach Carter</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1n_sNtCxJKZhej9ZUtD0sGI4ofW1v3hUM/preview" target="_blank">E.T.</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/15I53Aon6p9Y62ZB3WVgZV9VF5lxCqgs7/preview" target="_blank">Jurassic Park</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1aALErEK5KfjQ-d_0uo11ctVq2Rh8NX_B/preview" target="_blank">The Shining</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1cW6LBFYp1cSUHc3m1dKS7OXTawBliGes/preview" target="_blank">Bohemian Rhapsody</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1FIsH4YpvMYtZ6QqYcLqIElJ5nklCBQ5J/preview" target="_blank">The Worlds Fastest Indian</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1bXPLK5q-oj6S6uYf-wiIxq2tsRP6Isds/preview" target="_blank">Mad Max Fury Road</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1hxtMioeN8dZvT86f8viA46tNdEQa3xu1/preview" target="_blank">Fast and the Furious</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1-ffPKme30k8GZVODO3RzesVwhX644Jc0/preview" target="_blank">2 Fast 2 Furious</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1erprq6TEof8Oc7PH4UedLwhTP8wk1o3F/preview" target="_blank">Fast and the Furious: Tokyo Drift</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1bSj9-D3tNCqQ1A2CIRbiQHM4HoXWW9t2/preview" target="_blank">Green Book</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1IT7TJdKvPTEpa5VXuYpRGPsdZ9PSYmcN/preview" target="_blank">Real Steel</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1yL6LrO5DUxd6n2sQWHKpZxgYun5TlH4W/preview" target="_blank">School of Rock</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1ebsvZszUWqeq2bMijfAp8Okx_iKLIom6/preview" target="_blank">Scary Movie 2026</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/168ilpukPynuGXo-dSq6JivVGW7cMONZN/preview" target="_blank">Spider-Man Brand New Day</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1OD13HoMSdyHfn1hINyfwn5bohB25NErZ/preview" target="_blank">Backrooms 2026</a></div>
+        <div class="card movie-card"><a href="https://drive.google.com/file/d/1XSAx8gwDwvFGeM3bZFKbEJwHmgKKw12g/preview" target="_blank">The Odyssey</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('gameSearch');
+    const searchBtn = document.getElementById('searchBtn');
+    const searchContainer = document.getElementById('searchContainer');
+
+    /*function switchTab(tabId, buttonElement) {
+      const tabs = document.getElementsByClassName('tab-content');
+
+      for (let i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('active');
+      }
+
+      const buttons = document.getElementsByClassName('tab-btn');
+
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+      }
+
+      document.getElementById(tabId).classList.add('active');
+      buttonElement.classList.add('active');
+
+      searchInput.value = '';
+      filterContent();
+    } */
+
+
+    function filterContent() {
+      const filter = searchInput.value.toLowerCase();
+
+      const activeTab = document.querySelector('.tab-content.active');
+      const activeCards = activeTab.getElementsByClassName('card');
+      
+      Array.from(activeCards).forEach(card => {
+        const txt = card.innerText.toLowerCase();
+        card.style.display = txt.includes(filter) ? "" : "none";
+      });
+    }
+
+    searchInput.addEventListener('keyup', filterContent);
+    searchBtn.addEventListener('click', () => {
+      searchContainer.classList.toggle('expanded');
+      searchInput.focus();
+    });
+  </script>
+</body>
+</html>
+
